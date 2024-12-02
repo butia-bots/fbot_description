@@ -103,6 +103,6 @@
     <xacro:wheel prefix="right" reflect="-1" />
   </xacro:macro>
 
-  <xacro:shark_base/>
+  <!-- <xacro:shark_base/> -->
 
 </robot>

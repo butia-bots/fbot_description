@@ -53,7 +53,7 @@ def generate_launch_description():
     # )
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("boris_description"), "config", "boris.rviz"]
+        [FindPackageShare("boris_description"), "rviz", "boris.rviz"]
     )
 
     control_node = Node(
@@ -115,14 +115,14 @@ def generate_launch_description():
         )
     )
 
-    nodes = [
+    nodes = [        
         control_node,
         robot_state_pub_node,
         joint_state_publisher_node,
         joint_state_broadcaster_spawner,
         delay_rviz_after_joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
-        # robot_localization,
+        rviz_node,
     ]
 
     return LaunchDescription(declared_arguments + nodes)
