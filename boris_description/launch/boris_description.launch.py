@@ -10,6 +10,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -23,8 +24,16 @@ def generate_launch_description():
         )
     )
 
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "arm_z_position",
+            description="Arm support height from the the top of the base.",
+        )
+    )
+
     # Initialize Arguments
     use_rviz = LaunchConfiguration("use_rviz")
+    arm_z_position = LaunchConfiguration("arm_z_position")
 
     # Get URDF via xacro
     robot_description_content = Command(
@@ -32,11 +41,14 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("boris_description"), "urdf", "boris.xacro"]
+                [FindPackageShare("boris_description"), "urdf", "boris.urdf.xacro"]
             ),
+            " ",
+            "arm_z_position:=",
+            arm_z_position
         ]
     )
-    robot_description = {"robot_description": robot_description_content}
+    robot_description = {"robot_description": ParameterValue(robot_description_content, value_type=str)}
 
     robot_controllers = PathJoinSubstitution(
         [
@@ -45,13 +57,6 @@ def generate_launch_description():
             "boris_controllers.yaml",
         ]
     )
-
-    # robot_localization = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(get_package_share_directory('freedom_navigation'), 'launch', 'robot_localization.launch.py')
-    #     )
-    # )
-
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare("boris_description"), "rviz", "boris.rviz"]
     )
@@ -100,12 +105,12 @@ def generate_launch_description():
     )
 
     # Delay rviz start after `joint_state_broadcaster`
-    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-       event_handler=OnProcessExit(
-           target_action=joint_state_broadcaster_spawner,
-           on_exit=[rviz_node],
-       )
-    )
+    # delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
+    #    event_handler=OnProcessExit(
+    #        target_action=joint_state_broadcaster_spawner,
+    #        on_exit=[rviz_node],
+    #    )
+    # )
 
     # Delay start of robot_controller after `joint_state_broadcaster`
     delay_robot_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
@@ -120,7 +125,7 @@ def generate_launch_description():
         robot_state_pub_node,
         joint_state_publisher_node,
         joint_state_broadcaster_spawner,
-        delay_rviz_after_joint_state_broadcaster_spawner,
+        # delay_rviz_after_joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
         rviz_node,
     ]

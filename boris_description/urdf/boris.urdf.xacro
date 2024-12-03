@@ -5,7 +5,7 @@
   <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
   <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
-  <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.urdf.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.xacro" />
   <xacro:include filename="$(find boris_head_description)/urdf/boris_head.urdf" />
   <!-- <xacro:include filename="$(find interbotix_xsarm_descriptions)/urdf/wx200.urdf.xacro" /> -->
 
@@ -117,9 +117,7 @@
     <origin xyz="0 0 ${dorso_height + 0.04}" rpy="0 0 0" />
   </joint>
 
-  <xacro:realsense_camera name="camera" parent="dorso_link">
-    <origin xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0" />
-  </xacro:realsense_camera>
+  <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/>
 
   <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
   <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>

@@ -67,16 +67,7 @@
   </xacro:macro>
 
   <xacro:macro name="shark_base">
-    <link name="base_footprint">
-      <xacro:box_inertia m="8" w="0.001" h="0.001" d="0.001" />
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <material name="white" />
-        <geometry>
-          <box size="0.001 0.001 0.001" />
-        </geometry>
-      </visual>
-    </link>
+    <link name="base_footprint"/>
 
     <link name="base_link">
       <xacro:box_inertia m="1" w="${base_len}" h="${base_width}" d="0.01" />
