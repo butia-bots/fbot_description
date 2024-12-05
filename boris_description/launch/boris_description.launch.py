@@ -6,11 +6,11 @@ from launch.event_handlers import OnProcessExit
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.parameter_descriptions  import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -24,16 +24,8 @@ def generate_launch_description():
         )
     )
 
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "arm_z_position",
-            description="Arm support height from the the top of the base.",
-        )
-    )
-
     # Initialize Arguments
     use_rviz = LaunchConfiguration("use_rviz")
-    arm_z_position = LaunchConfiguration("arm_z_position")
 
     # Get URDF via xacro
     robot_description_content = Command(
@@ -41,18 +33,35 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("boris_description"), "urdf", "boris.urdf.xacro"]
+                [FindPackageShare("boris_description"), "urdf", "boris_description.xacro"]
             ),
-            " ",
-            "arm_z_position:=",
-            arm_z_position
         ]
     )
-    robot_description = {"robot_description": ParameterValue(robot_description_content, value_type=str)}
+    robot_description = {"robot_description": ParameterValue(robot_description_content,value_type=str)}
 
-    
+    robot_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("boris_description"),
+            "config",
+            "boris_controllers.yaml",
+        ]
+    )
+
+    # robot_localization = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(get_package_share_directory('freedom_navigation'), 'launch', 'robot_localization.launch.py')
+    #     )
+    # )
+
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("boris_description"), "rviz", "boris.rviz"]
+        [FindPackageShare("boris_description"), "config", "boris.rviz"]
+    )
+
+    control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[robot_description, robot_controllers],
+        output="both",
     )
 
     robot_state_pub_node = Node(
@@ -64,7 +73,12 @@ def generate_launch_description():
             ("/hoverboard_base_controller/cmd_vel_unstamped", "/cmd_vel"),
         ],
     )
-
+    joint_state_publisher_node = Node(
+        package="joint_state_publisher",
+        executable="joint_state_publisher",
+        name="joint_state_publisher",
+        output="both",
+    )
     rviz_node = Node(
        package="rviz2",
        executable="rviz2",
@@ -85,11 +99,31 @@ def generate_launch_description():
         executable="spawner",
         arguments=["hoverboard_base_controller", "--controller-manager", "/controller_manager"],
     )
-    
 
-    nodes = [        
+    # Delay rviz start after `joint_state_broadcaster`
+    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
+       event_handler=OnProcessExit(
+           target_action=joint_state_broadcaster_spawner,
+           on_exit=[rviz_node],
+       )
+    )
+
+    # Delay start of robot_controller after `joint_state_broadcaster`
+    delay_robot_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[robot_controller_spawner],
+        )
+    )
+
+    nodes = [
+        control_node,
         robot_state_pub_node,
-        rviz_node,
+        joint_state_publisher_node,
+        joint_state_broadcaster_spawner,
+        delay_rviz_after_joint_state_broadcaster_spawner,
+        delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
+        # robot_localization,
     ]
 
     return LaunchDescription(declared_arguments + nodes)
