@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="shark-v1">
 
+  <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/hokuyo.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
-  <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.xacro" />
   <xacro:include filename="$(find boris_head_description)/urdf/boris_head.urdf" />
-  <xacro:include filename="$(find interbotix_xsarm_descriptions)/urdf/wx200.urdf.xacro" />
+  <!-- <xacro:include filename="$(find interbotix_xsarm_descriptions)/urdf/wx200.urdf.xacro" /> -->
+
+  <!-- <xacro:include filename="$(find boris_description)/ros2_control/shark_ros2_control.xacro" /> -->
 
   <xacro:property name="base_width" value="0.336" />
   <xacro:property name="base_len" value="0.5" />
@@ -117,11 +119,11 @@
     <origin xyz="0 0 ${dorso_height + 0.04}" rpy="0 0 0" />
   </joint>
 
-  <joint name="arm_to_robot" type="fixed">
+  <!-- <joint name="arm_to_robot" type="fixed">
     <origin xyz="0.1 0 ${arm_support_height/2}" rpy="0 0 0"/>
     <parent link="arm_support_link"/>
     <child link="wx200/base_link"/>
-  </joint>
+  </joint> -->
 
   <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/>
 
