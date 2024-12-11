@@ -78,6 +78,9 @@ def generate_launch_description():
         executable="joint_state_publisher",
         name="joint_state_publisher",
         output="both",
+        parameters=[{
+            'source_list': "['/mobile_wx200/joint_states']",
+        }],
     )
     rviz_node = Node(
        package="rviz2",
