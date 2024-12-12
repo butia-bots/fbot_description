@@ -47,12 +47,6 @@ def generate_launch_description():
         ]
     )
 
-    # robot_localization = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(get_package_share_directory('freedom_navigation'), 'launch', 'robot_localization.launch.py')
-    #     )
-    # )
-
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare("logistic_description"), "config", "logistic.rviz"]
     )

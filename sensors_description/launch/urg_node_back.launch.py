@@ -39,9 +39,10 @@ def generate_launch_description():
         Node(
             package='urg_node',
             executable='urg_node_driver',
-            name='urg_node',
+            name='urg_node_back',
             output='screen',
-            parameters=[LaunchConfiguration('param')]
+            parameters=[LaunchConfiguration('param')],
+            remappings=[('scan', 'scan2')]
         ),
 
         # Condicional para abrir o RViz se 'use_rviz' for True
@@ -51,6 +52,6 @@ def generate_launch_description():
             name='rviz2',
             output='screen',
             condition=IfCondition(LaunchConfiguration('use_rviz')),
-            arguments=['-d', os.path.join(urg_node_dir, 'config', 'urg_node.rviz')]
+            arguments=['-d', os.path.join(urg_node_dir, 'rviz', 'urg_node.rviz')]
         )
     ])

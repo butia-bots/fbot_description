@@ -63,7 +63,7 @@ def generate_launch_description():
     
     # RViz Configuration
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("logistic_description"), "config", "velodyne.rviz"]
+        [FindPackageShare("logistic_description"), "rviz", "velodyne.rviz"]
     )
 
     rviz_node = Node(

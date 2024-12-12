@@ -19,6 +19,8 @@ install( DIRECTORY config/
          DESTINATION share/${PROJECT_NAME}/config)
 install( DIRECTORY urdf/
          DESTINATION share/${PROJECT_NAME}/urdf)
+install( DIRECTORY rviz/
+         DESTINATION share/${PROJECT_NAME}/rviz)
 # install( DIRECTORY ros2_control/
 #          DESTINATION share/${PROJECT_NAME}/ros2_control)
 

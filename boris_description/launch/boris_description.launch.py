@@ -54,7 +54,7 @@ def generate_launch_description():
     # )
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("boris_description"), "config", "boris.rviz"]
+        [FindPackageShare("boris_description"), "rviz", "boris.rviz"]
     )
 
     control_node = Node(
