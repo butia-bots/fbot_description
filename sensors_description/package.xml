@@ -8,7 +8,6 @@
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <build_depend>velodyne_description</build_depend>
   <build_depend>sick_scan_xd</build_depend>
   <build_depend>urg_node</build_depend>
   <build_depend>bno055</build_depend>
