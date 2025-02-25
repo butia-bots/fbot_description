@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="shark-v1">
 
   <!-- <xacro:include filename="$(find sensors_description)/urdf/hokuyo.xacro" /> -->
-  <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" />
+  <!-- <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" /> -->
   <!-- <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.urdf.xacro" /> -->
   <!-- <xacro:include filename="$(find hector_sensors_description)/urdf/realsense_d435_camera.urdf.xacro" /> -->
   <!-- <xacro:include filename="$(find doris_head_description)/urdf/doris_head.urdf" /> -->
@@ -11,11 +11,11 @@
   <xacro:property name="base_width" value="0.336" />
   <xacro:property name="base_len" value="0.5" />
   <xacro:property name="base_height" value="0.231" />
-  <xacro:property name="wheel_radius" value="0.0825" />
+  <!-- <xacro:property name="wheel_radius" value="0.0825" />
   <xacro:property name="base_wheel_gap" value="0.05" />
   <xacro:property name="wheel_width" value="0.06" />
   <xacro:property name="wheel_separation" value="0.39" />
-  <xacro:property name="wheel_joint_offset" value="0.0" />
+  <xacro:property name="wheel_joint_offset" value="0.0" /> -->
   <xacro:property name="caster_height" value="0.07" />
   
   <xacro:property name="dorso_width" value="0.338" />
@@ -103,7 +103,7 @@
     </inertial>
   </xacro:macro>
 
-  <xacro:macro name="wheel" params="prefix reflect">
+  <!-- <xacro:macro name="wheel" params="prefix reflect">
     <link name="${prefix}_wheel">
       <visual>
         <material name="darkgray" />
@@ -132,7 +132,7 @@
   </xacro:macro>
 
   <xacro:wheel prefix="left" reflect="1" />
-  <xacro:wheel prefix="right" reflect="-1" />
+  <xacro:wheel prefix="right" reflect="-1" /> -->
 
   <xacro:macro name="sphere_inertia" params="m r">
     <inertial>
@@ -151,8 +151,7 @@
     </joint>
   </xacro:macro>
 
-
-  <xacro:sick_lms1xx />
+  <!-- <xacro:sick_lms1xx /> -->
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">
     <link name="dorso_link">
@@ -245,11 +244,11 @@
     </joint>
   </xacro:macro>
 
-  <joint name="laser_joint" type="fixed">
+  <!-- <joint name="laser_joint" type="fixed">
     <origin xyz="${base_len/2 + 0.017 + 0.05} 0 ${0.02 + base_height/2}" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="sick_link" />
-  </joint>
+  </joint> -->
 
   <!-- <joint name="dorso_head" type="fixed">
     <parent link="dorso_link" />
