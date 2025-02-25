@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rgb_cam">
+    <xacro:macro name="rgb_cam" params="parent name xyz rpy">
+        <link name="${name}_link">
+            <visual>
+                <material name="lightgray" />
+                <geometry>
+                    <box size="0.013 0.0627 0.02597" />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="0.013 0.0627 0.02597" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="${name}_lens_link">
+            <visual>
+                <material name="black" />
+                <origin xyz="0.001 0 0" rpy="0.0 1.5707963267948966 0.0" />
+                <geometry>
+                    <cylinder radius="0.00725" length="0.013" />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="0.00725" length="0.013" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${name}_joint" type="fixed">
+            <parent link="${parent}" />
+            <child link="${name}_link" />
+            <origin xyz="${xyz}" rpy="${rpy}" />
+        </joint>
+
+        <joint name="${name}_lens_joint" type="fixed">
+            <parent link="${name}_link" />
+            <child link="${name}_lens_link" />
+            <origin xyz="0.0 -0.015375 0.0" />
+
+        </joint>
+    </xacro:macro>
+</robot>

@@ -6,6 +6,7 @@ from launch.event_handlers import OnProcessExit
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.parameter_descriptions  import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
@@ -32,11 +33,11 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("boris_description"), "urdf", "boris.xacro"]
+                [FindPackageShare("boris_description"), "urdf", "boris_description.xacro"]
             ),
         ]
     )
-    robot_description = {"robot_description": robot_description_content}
+    robot_description = {"robot_description": ParameterValue(robot_description_content,value_type=str)}
 
     robot_controllers = PathJoinSubstitution(
         [
@@ -53,7 +54,7 @@ def generate_launch_description():
     # )
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("boris_description"), "config", "boris.rviz"]
+        [FindPackageShare("boris_description"), "rviz", "boris.rviz"]
     )
 
     control_node = Node(
@@ -77,6 +78,9 @@ def generate_launch_description():
         executable="joint_state_publisher",
         name="joint_state_publisher",
         output="both",
+        parameters=[{
+            'source_list': "['/mobile_wx200/joint_states']",
+        }],
     )
     rviz_node = Node(
        package="rviz2",

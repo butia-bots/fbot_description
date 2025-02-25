@@ -6,6 +6,7 @@ from launch.event_handlers import OnProcessExit
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.parameter_descriptions  import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
@@ -32,11 +33,11 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("logistic_description"), "urdf", "logistic.xacro"]
+                [FindPackageShare("logistic_description"), "urdf", "logistic_description.xacro"]
             ),
         ]
     )
-    robot_description = {"robot_description": robot_description_content}
+    robot_description = {"robot_description": ParameterValue(robot_description_content,value_type=str)}
 
     robot_controllers = PathJoinSubstitution(
         [
@@ -44,12 +45,6 @@ def generate_launch_description():
             "config",
             "logistic_controllers.yaml",
         ]
-    )
-
-    robot_localization = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('freedom_navigation'), 'launch', 'robot_localization.launch.py')
-        )
     )
 
     rviz_config_file = PathJoinSubstitution(
@@ -122,7 +117,7 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         delay_rviz_after_joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
-        robot_localization,
+        # robot_localization,
     ]
 
     return LaunchDescription(declared_arguments + nodes)

@@ -13,14 +13,14 @@ def generate_launch_description():
     declared_arguments = []
     declared_arguments.append(
         DeclareLaunchArgument(
-            "gui",
+            "use_rviz",
             default_value="true",
             description="Start RViz2 automatically with this launch file.",
         )
     )
 
     # Initialize Arguments
-    gui = LaunchConfiguration("gui")
+    use_rviz = LaunchConfiguration("use_rviz")
 
     # Get URDF via xacro
     robot_description_content = Command(
@@ -58,9 +58,6 @@ def generate_launch_description():
         executable="robot_state_publisher",
         output="both",
         parameters=[robot_description],
-        remappings=[
-            ("/hoverboard_base_controller/cmd_vel_unstamped", "/cmd_vel"),
-        ],
     )
     joint_state_publisher_node = Node(
         package="joint_state_publisher",
@@ -74,7 +71,7 @@ def generate_launch_description():
        name="rviz2",
        output="log",
        arguments=["-d", rviz_config_file],
-       condition=IfCondition(gui),
+       condition=IfCondition(use_rviz),
     )
 
     joint_state_broadcaster_spawner = Node(
