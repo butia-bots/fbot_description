@@ -32,7 +32,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name = 'xacro')]),
             ' ',
             PathJoinSubstitution(
-                [FindPackageShare('boris_description'), 'urdf', 'boris.xacro']
+                [FindPackageShare('boris_description'), 'urdf', 'boris_description.xacro']
             ),
         ]
     )
@@ -72,7 +72,7 @@ def generate_launch_description():
         package = 'ros_gz_sim',
         executable = 'create',
         arguments = [
-            '-name', 'boris_simulation',
+            '-name', 'boris_sim',
             '-topic', 'robot_description',
             '-x', '0.0', '-y', '0.0', '-z', '0.5', '-Y', '0.0'  # Initial spawn position
         ],
@@ -111,12 +111,6 @@ def generate_launch_description():
         ]
     )
 
-    # trajectory_node = Node(
-    #     package='mogi_trajectory_server',
-    #     executable='mogi_trajectory_server',
-    #     name='mogi_trajectory_server',
-    # )
-
     launchDescriptionObject = LaunchDescription()
 
     launchDescriptionObject.add_action(rviz_launch_arg)
@@ -127,6 +121,5 @@ def generate_launch_description():
     launchDescriptionObject.add_action(spawn_urdf_node)
     launchDescriptionObject.add_action(robot_state_publisher_node)
     launchDescriptionObject.add_action(gz_bridge_node)
-    # launchDescriptionObject.add_action(trajectory_node)
 
     return launchDescriptionObject
