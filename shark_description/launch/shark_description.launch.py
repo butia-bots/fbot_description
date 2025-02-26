@@ -14,7 +14,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "gui",
-            default_value="false",
+            default_value="true",
             description="Start RViz2 automatically with this launch file.",
         )
     )
@@ -109,7 +109,7 @@ def generate_launch_description():
         control_node,
         robot_state_pub_node,
         joint_state_publisher_node,
-        rviz_node,
+        # rviz_node,
         joint_state_broadcaster_spawner,
         delay_rviz_after_joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
