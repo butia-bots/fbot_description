@@ -36,19 +36,16 @@ def generate_launch_description():
             ),
         ]
     )
+
     robot_description = {'robot_description': robot_description_content}
 
     pkg_boris_description = get_package_share_directory('boris_description')
-
-    robot_controllers = PathJoinSubstitution(
-        [FindPackageShare('boris_description'), 'config', 'boris_controllers.yaml']
-    )
 
     model_arg = DeclareLaunchArgument(
         'model', default_value = robot_description,
         description = 'Name of the URDF description to load'
     )
-    
+
     # Nodes launch
     world_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -75,7 +72,7 @@ def generate_launch_description():
         package = 'ros_gz_sim',
         executable = 'create',
         arguments = [
-            '-name', 'boris_sim',
+            '-name', 'boris_simulation',
             '-topic', 'robot_description',
             '-x', '0.0', '-y', '0.0', '-z', '0.5', '-Y', '0.0'  # Initial spawn position
         ],
@@ -85,13 +82,6 @@ def generate_launch_description():
         ]
     )
 
-    control_node = Node(
-        package = 'controller_manager',
-        executable = 'ros2_control_node',
-        parameters = [robot_description, robot_controllers],
-        output = 'both',
-    )
-
     robot_state_publisher_node = Node(
         package = 'robot_state_publisher',
         executable = 'robot_state_publisher',
@@ -99,52 +89,33 @@ def generate_launch_description():
         output = 'both',
         parameters=[robot_description],
         remappings=[
-            ('/hoverboard_base_controller/cmd_vel_unstamped', '/cmd_vel'),
             ('/tf', 'tf'),
             ('/tf_static', 'tf_static')
         ]
     )
 
-    joint_state_publisher_node = Node(
-        package = 'joint_state_publisher',
-        executable = 'joint_state_publisher',
-        name = 'joint_state_publisher',
-        output = 'both',
-        parameters = [{'source_list': "['/mobile_wx200/joint_states']",}],
+     # Node to bridge messages like /cmd_vel and /odom
+    gz_bridge_node = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=[
+            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+            "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
+            "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+            "/joint_states@sensor_msgs/msg/JointState@gz.msgs.Model",
+            "/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V"
+        ],
+        output="screen",
+        parameters=[
+            {'use_sim_time': True},
+        ]
     )
 
-    joint_state_publisher_gui_node = Node(
-        package = 'joint_state_publisher_gui',
-        executable = 'joint_state_publisher_gui',
-    )
-
-    joint_state_broadcaster_spawner = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
-    )
-
-    robot_controller_spawner = Node(
-        package = 'controller_manager',
-        executable = 'spawner',
-        arguments = ['hoverboard_base_controller', '--controller-manager', '/controller_manager'],
-    )
-
-    # Delay rviz start after `joint_state_broadcaster`
-    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-       event_handler = OnProcessExit(
-           target_action = joint_state_broadcaster_spawner,
-           on_exit = [rviz_node],
-       )
-    )
-
-    # Delay start of robot_controller after `joint_state_broadcaster`
-    delay_robot_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-        event_handler = OnProcessExit(
-            target_action = joint_state_broadcaster_spawner,
-            on_exit = [robot_controller_spawner],
-        )
-    )
+    # trajectory_node = Node(
+    #     package='mogi_trajectory_server',
+    #     executable='mogi_trajectory_server',
+    #     name='mogi_trajectory_server',
+    # )
 
     launchDescriptionObject = LaunchDescription()
 
@@ -155,12 +126,7 @@ def generate_launch_description():
     launchDescriptionObject.add_action(rviz_node)
     launchDescriptionObject.add_action(spawn_urdf_node)
     launchDescriptionObject.add_action(robot_state_publisher_node)
-    launchDescriptionObject.add_action(joint_state_publisher_gui_node)
-
-    # launchDescriptionObject.add_action(control_node)
-    # launchDescriptionObject.add_action(joint_state_publisher_node)
-    # launchDescriptionObject.add_action(joint_state_broadcaster_spawner)
-    # launchDescriptionObject.add_action(delay_rviz_after_joint_state_broadcaster_spawner)
-    # launchDescriptionObject.add_action(delay_robot_controller_spawner_after_joint_state_broadcaster_spawner)
+    launchDescriptionObject.add_action(gz_bridge_node)
+    # launchDescriptionObject.add_action(trajectory_node)
 
     return launchDescriptionObject
