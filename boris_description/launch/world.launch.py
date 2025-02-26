@@ -9,8 +9,8 @@ from launch.substitutions import  LaunchConfiguration, PathJoinSubstitution, Tex
 def generate_launch_description():
 
     world_arg = DeclareLaunchArgument(
-        'world', default_value='world.sdf',
-        description='Name of the Gazebo world file to load'
+        'world', default_value = 'world.sdf',
+        description = 'Name of the Gazebo world file to load'
     )
 
     pkg_bme_gazebo_basics = get_package_share_directory('boris_description')
@@ -25,8 +25,7 @@ def generate_launch_description():
             'worlds',
             LaunchConfiguration('world')
         ]),
-        #TextSubstitution(text=' -r -v -v1 --render-engine ogre --render-engine-gui-api-backend opengl')],
-        TextSubstitution(text=' -r -v -v1')],
+        TextSubstitution(text = ' -r -v -v1')],
         'on_exit_shutdown': 'true'}.items()
     )
 
