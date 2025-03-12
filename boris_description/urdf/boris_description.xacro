@@ -56,8 +56,8 @@
     </joint>
   </xacro:macro>
 
+  <xacro:sick_lms1xx parent="base_link" xyz="${base_len/2 + 0.017 + 0.05} 0 ${0.02 + base_height/2}" rpy="0 0 0" name="sick"/>
 
-  <xacro:sick_lms1xx />
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">
     <link name="dorso_link">
@@ -107,11 +107,11 @@
   </xacro:macro>
 
   
-  <joint name="laser_joint" type="fixed">
+  <!-- <joint name="laser_joint" type="fixed">
     <origin xyz="${base_len/2 + 0.017 + 0.05} 0 ${0.02 + base_height/2}" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="sick_link" />
-  </joint>
+  </joint> -->
 
   <!-- <joint name="dorso_head" type="fixed">
     <parent link="dorso_link" />
