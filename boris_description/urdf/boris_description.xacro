@@ -3,7 +3,7 @@
 
   <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/hokuyo.xacro" />
-  <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" />
+  <xacro:include filename="/home/stihl/fbot_ws/src/sick_scan_xd/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.xacro" />
   <!-- <xacro:include filename="$(find boris_head_description)/urdf/boris_head.urdf" /> -->
@@ -57,7 +57,7 @@
   </xacro:macro>
 
 
-  <xacro:sick_lms1xx />
+  <xacro:sick_lms_1xx name="sick" ros_topic="/scan" />
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">
     <link name="dorso_link">
@@ -110,8 +110,10 @@
   <joint name="laser_joint" type="fixed">
     <origin xyz="${base_len/2 + 0.017 + 0.05} 0 ${0.02 + base_height/2}" rpy="0 0 0" />
     <parent link="base_link" />
-    <child link="sick_link" />
+    <child link="sick_mount_link" />
   </joint>
+
+  
 
   <!-- <joint name="dorso_head" type="fixed">
     <parent link="dorso_link" />

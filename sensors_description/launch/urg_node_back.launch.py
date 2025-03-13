@@ -42,7 +42,7 @@ def generate_launch_description():
             name='urg_node_back',
             output='screen',
             parameters=[LaunchConfiguration('param')],
-            remappings=[('scan', 'scan2')]
+            remappings=[('scan', 'scan3')]
         ),
 
         # Condicional para abrir o RViz se 'use_rviz' for True
