@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
   <robot name="boris_head">
 
     <link name="head_link">
@@ -489,12 +488,6 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-
-  <!--gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/boris_head</robotNamespace>
-    </plugin>
-  </gazebo-->
     
     <material name="BLACK_006">
       <color rgba="0.00291 0.00291 0.00291 1.0"/>
