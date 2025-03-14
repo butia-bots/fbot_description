@@ -10,6 +10,8 @@
   <xacro:property name="wheel_separation" value="0.41" />
   <xacro:property name="wheel_joint_offset" value="0.0" />
   <xacro:property name="caster_height" value="0.07" />
+  <xacro:property name="caster_wheel_joint_offset" value="0.0" />
+  <xacro:property name="caster_wheel_radius" value="0.02" />
   
   <xacro:macro name="box_inertia" params="m w h d">
     <inertial>
@@ -75,7 +77,7 @@
       <xacro:cylinder_inertia m="10" r="${wheel_radius}" h="0.05"/>
     </link>
 
-    <joint name="${prefix}_wheel" type="continuous">
+    <joint name="${prefix}_wheel_joint" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0" />
       <parent link="base_link"/>
       <child link="${prefix}_wheel"/>
@@ -93,7 +95,7 @@
     </inertial>
   </xacro:macro>
 
-   <!-- <link name="caster_wheel">
+   <link name="caster_wheel">
      <visual>
        <material name="darkgray"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -114,7 +116,7 @@
     <axis xyz="0 1 0" rpy="0 0 0" />
     <parent link="base_link"/>
     <child link="caster_wheel"/>
-    <origin xyz="${caster_wheel_joint_offset} 0 -${0.06+caster_wheel_radius}" rpy="0 0 0"/>
-  </joint> -->
+    <origin xyz="${(base_len/2) - caster_wheel_joint_offset} 0 ${(caster_wheel_radius - caster_height) - base_height/2}" rpy="0 0 0"/>
+  </joint>
 
 </robot>

@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <robot>
-<!--Gazebo Differential Drive Plugin-->
   <gazebo>
         <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
-    
-    
-            <!-- Wheel Information -->
+            <ros>
+                <namespace>/</namespace>    
+            </ros>
             <left_joint>left_wheel_joint</left_joint>
             <right_joint>right_wheel_joint</right_joint>
             <wheel_separation>${wheel_separation}</wheel_separation>
             <wheel_diameter>${wheel_radius}</wheel_diameter>
     
 
-            <!-- Limits -->
             <max_wheel_torque>200</max_wheel_torque>
             <max_wheel_acceleration>10.0</max_wheel_acceleration>
     
 
-            <!-- Output -->
             <odometry_frame>odom</odometry_frame>
-            <robot_base_frame>base_link</robot_base_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
+
+            <command_topic>/cmd_vel</command_topic>
+            <odometry_topic>/odom</odometry_topic>
 
             <publish_odom>true</publish_odom>
             <publish_odom_tf>true</publish_odom_tf>
@@ -28,7 +28,29 @@
     
         </plugin>
     </gazebo>
-    
+    <gazebo>
+        <link name="base_link">
+            <sensor name="imu" type="imu">
+                <always_on>true</always_on>
+                <update_rate>30</update_rate>
+                <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+                <ros>
+                    <namespace>/bno055</namespace>
+                    <remapping>~/out:=imu</remapping>
+                </ros>
+                </plugin>
+            </sensor>
+        </link>
+    </gazebo>
+    <gazebo reference="base_link">
+      <material>Gazebo/DarkGray</material>
+    </gazebo>
+    <gazebo reference="left_wheel">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="right_wheel">
+      <material>Gazebo/Black</material>
+    </gazebo>
 
 </robot>
  

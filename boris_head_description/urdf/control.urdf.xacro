@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <ros2_control name="head_hardware_interface" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <joint name="horizontal_neck_joint">
+      <command_interface name="position">
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="vertical_neck_joint">
+      <command_interface name="position">
+      </command_interface>
+      <state_interface name="position"/>
+    </joint>
+  </ros2_control>
+
+</robot>

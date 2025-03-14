@@ -32,7 +32,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("boris_description"), "urdf", "boris.xacro"]
+                [FindPackageShare("boris_description"), "urdf", "boris_arm.xacro"]
             ),
         ]
     )
