@@ -54,6 +54,7 @@
             <remapping>~/out:=/${name}/scan</remapping>
             <namespace>/${name}</namespace>
           </ros>
+					<frame_name>hokuyo_${name}_link</frame_name>
           <output_type>sensor_msgs/LaserScan</output_type>
         </plugin>
       </sensor>
