@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="shark-v1">
+    <xacro:include filename="$(find hector_models)/urdf/orbbec_astra2.xacro" />
+    <xacro:include filename="$(find hector_models)/gazebo/orbbec_astra2.gazebo.xacro" />
     <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
     <xacro:arg name="robot_name" default="${robot_model}"/>
     <xacro:include filename="$(find boris_description)/urdf/boris.xacro" />
@@ -8,7 +10,9 @@
         <child link="$(arg robot_name)/base_link" />
         <origin xyz="0.1 0 ${arm_support_height/2}" rpy="0 0 0" />
     </joint>
-    <xacro:rgb_cam parent="wx200/gripper_bar_link" name="webcam" xyz="-0.078 0.0 0.05" rpy="0 0 0"/>
-    <xacro:rgb_cam_gazebo />
-    <xacro:add_optical_frame_rgb_cam name="webcam_lens_link" />
+    <xacro:orbbec_astra2 name="wrist_camera">
+        <parent link="wx200/gripper_bar_link" />
+        <origin xyz="-0.078 0.0 0.05" rpy="0 0 0"/>
+    </xacro:orbbec_astra2>
+    <xacro:orbbec_astra2_gazebo name="wrist_camera" semantic_segmentation="false"/>
 </robot>

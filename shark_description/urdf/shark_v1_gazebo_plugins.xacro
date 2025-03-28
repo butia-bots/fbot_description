@@ -10,16 +10,13 @@
             <wheel_separation>${wheel_separation}</wheel_separation>
             <wheel_diameter>${wheel_radius}</wheel_diameter>
     
-
+            <update_rate>500</update_rate>
             <max_wheel_torque>200</max_wheel_torque>
             <max_wheel_acceleration>10.0</max_wheel_acceleration>
     
 
             <odometry_frame>odom</odometry_frame>
             <robot_base_frame>base_footprint</robot_base_frame>
-
-            <command_topic>/cmd_vel</command_topic>
-            <odometry_topic>/odom</odometry_topic>
 
             <publish_odom>true</publish_odom>
             <publish_odom_tf>true</publish_odom_tf>
