@@ -1,0 +1,22 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/stihl/fbot_ws/install/sick_scan_xd/local/lib/python3.10/dist-packages",
+        "/home/stihl/fbot_ws/install/fbot_vision_msgs/local/lib/python3.10/dist-packages",
+        "/home/stihl/fbot_ws/install/fbot_vision_bringup/lib/python3.10/site-packages",
+        "/home/stihl/fbot_ws/install/fbot_recognition/lib/python3.10/site-packages",
+        "/home/stihl/fbot_ws/install/fbot_bringup/lib/python3.10/site-packages",
+        "/home/stihl/fbot_ws/install/fbot_behavior/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/stihl/fbot_ws/install/sick_scan_xd/local/lib/python3.10/dist-packages",
+        "/home/stihl/fbot_ws/install/fbot_vision_msgs/local/lib/python3.10/dist-packages",
+        "/home/stihl/fbot_ws/install/fbot_vision_bringup/lib/python3.10/site-packages",
+        "/home/stihl/fbot_ws/install/fbot_recognition/lib/python3.10/site-packages",
+        "/home/stihl/fbot_ws/install/fbot_bringup/lib/python3.10/site-packages",
+        "/home/stihl/fbot_ws/install/fbot_behavior/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}
