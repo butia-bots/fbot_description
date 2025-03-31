@@ -19,7 +19,6 @@
     </inertial>
   </xacro:macro>
 
-
   <xacro:macro name="cylinder_inertia" params="m r h">
     <inertial>
       <mass value="${m}" />
@@ -56,8 +55,6 @@
     </joint>
   </xacro:macro>
 
-  
-
   <xacro:macro name="sphere_inertia" params="m r">
     <inertial>
       <mass value="${m}" />
@@ -93,7 +90,5 @@
     <xacro:wheel prefix="left" reflect="1" />
     <xacro:wheel prefix="right" reflect="-1" />
   </xacro:macro>
-
-  <!-- <xacro:shark_base/> -->
 
 </robot>

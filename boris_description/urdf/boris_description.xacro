@@ -113,8 +113,6 @@
     <child link="sick_mount_link" />
   </joint>
 
-  
-
   <!-- <joint name="dorso_head" type="fixed">
     <parent link="dorso_link" />
     <child link="head_root" />
