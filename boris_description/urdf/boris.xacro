@@ -3,9 +3,9 @@
 
   <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/hokuyo.xacro" />
-  <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" />
+  <xacro:include filename="/home/stihl/fbot_ws/src/sick_scan_xd/urdf/sick_lms1xx.urdf.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
-  <!-- <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.xacro" /> -->
+  <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.xacro" />
   <!-- <xacro:include filename="$(find boris_head_description)/urdf/boris_head.urdf" /> -->
   <!-- <xacro:include filename="$(find interbotix_xsarm_descriptions)/urdf/wx200.urdf.xacro" /> -->
 
@@ -57,7 +57,7 @@
   </xacro:macro>
 
 
-  <xacro:sick_lms1xx />
+  <xacro:sick_lms_1xx name="sick" ros_topic="/scan" />
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">
     <link name="dorso_link">
@@ -110,7 +110,7 @@
   <joint name="laser_joint" type="fixed">
     <origin xyz="${base_len/2 + 0.017 + 0.05} 0 ${0.02 + base_height/2}" rpy="0 0 0" />
     <parent link="base_link" />
-    <child link="sick_link" />
+    <child link="sick_mount_link" />
   </joint>
 
   <!-- <joint name="dorso_head" type="fixed">
@@ -125,7 +125,7 @@
     <child link="wx200/base_link"/>
   </joint> -->
 
-  <!-- <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/> -->
+  <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/>
 
   <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
   <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>
@@ -134,5 +134,5 @@
   <xacro:imu parent="base_link" xyz="-0.01 0 ${0.02 - base_height/2}" rpy="-0.014161 -0.0203861 0" />
   <!-- <xacro:boris_arm parent="arm_support_link" xyz="0.1 0 ${arm_support_height/2}" rpy="0 0 0"/> -->
   <!-- <xacro:rgb_cam parent="wx200/gripper_bar_link" name="webcam" xyz="-0.078 0.0 0.05" rpy="0 0 0"/> -->
-  <xacro:shark_base/>
+  <xacro:shark_base/>  <!-- isso aq n existe mais, a gente reverteu as mudanças do luis que transformavam aquilo tudo em um macro q n ta aparecendo mais -->
 </robot>

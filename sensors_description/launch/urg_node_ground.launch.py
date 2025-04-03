@@ -43,7 +43,8 @@ def generate_launch_description():
             executable='urg_node_driver',
             name='urg_node_ground',
             output='screen',
-            parameters=[LaunchConfiguration('param')]
+            parameters=[LaunchConfiguration('param')],
+            remappings=[('scan', 'scan2')]
         ),
 
         # Condicional para abrir o RViz se 'use_rviz' for True

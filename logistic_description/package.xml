@@ -3,7 +3,7 @@
 <package format="3">
   <name>logistic_description</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>This package contains the URDF and meshes for the logistic robot description used in the project.</description>
   <maintainer email="jardel.dyonisio@hotmail.com">Jardel Dyonisio</maintainer>
   <license>TODO: License declaration</license>
 

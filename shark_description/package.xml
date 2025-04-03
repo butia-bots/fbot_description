@@ -3,7 +3,7 @@
 <package format="3">
   <name>shark_description</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>The shark_description package provides URDF models and meshes for the Shark robot.</description>
   <maintainer email="jardel.dyonisio@hotmail.com">Jardel Dyonisio</maintainer>
   <license>TODO: License declaration</license>
 

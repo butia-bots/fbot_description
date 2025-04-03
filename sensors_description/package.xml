@@ -11,10 +11,10 @@
   <build_depend>sick_scan_xd</build_depend>
   <build_depend>urg_node</build_depend>
   <build_depend>bno055</build_depend>
+  <build_depend>urg_node</build_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
 
   <export>
     <build_type>ament_cmake</build_type>
