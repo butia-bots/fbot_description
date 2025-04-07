@@ -46,11 +46,11 @@ def generate_launch_description():
         ]
     )
 
-    robot_localization = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('freedom_navigation'), 'launch', 'robot_localization.launch.py')
-        )
-    )
+    # robot_localization = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(get_package_share_directory('lognav_navigation'), 'launch', 'robot_localization.launch.py')
+    #     )
+    # )
 
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare("logistic_description"), "config", "logistic.rviz"]
@@ -122,7 +122,7 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         delay_rviz_after_joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
-        robot_localization,
+        # robot_localization,
     ]
 
     return LaunchDescription(declared_arguments + nodes)

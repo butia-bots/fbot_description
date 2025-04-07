@@ -8,7 +8,7 @@ from launch.actions import DeclareLaunchArgument
 def generate_launch_description():
 
     ld = LaunchDescription()
-    sick_scan_pkg_prefix = get_package_share_directory('sick_scan_xd')
+    sick_scan_pkg_prefix = get_package_share_directory('sensors_description')
     launchfile = os.path.basename(__file__)[:-3] # convert "<lidar_name>.launch.py" to "<lidar_name>.launch"
     launch_file_path = os.path.join(sick_scan_pkg_prefix, 'launch/' + launchfile) # 'launch/sick_lms_1xx.launch')
     node_arguments=[launch_file_path]
@@ -36,4 +36,3 @@ def generate_launch_description():
     
     ld.add_action(node)
     return ld
-
