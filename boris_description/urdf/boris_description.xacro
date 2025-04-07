@@ -125,14 +125,24 @@
     <child link="wx200/base_link"/>
   </joint> -->
 
+    <xacro:macro name="imu" params="parent xyz rpy">
+    <link name="imu_link"/>
+    <joint name="imu_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="imu_link"/>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+    </joint>
+    </xacro:macro>
+
   <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/>
 
   <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
   <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>
   <xacro:sensor_hokuyo parent="base_link" xyz="${base_len/2 + 0.017 + 0.024} 0 ${0.02 - base_height/2}" rpy="3.14 0 0" name="ground"/>
   <xacro:sensor_hokuyo parent="base_link" xyz="${-base_len/2 - 0.017 - 0.024} 0 ${0.02 - base_height/2}" rpy="3.14 0 3.14" name="back"/>
-  <xacro:imu parent="base_link" xyz="-0.01 0 ${0.02 - base_height/2}" rpy="-0.014161 -0.0203861 0" />
+  <!-- <xacro:imu parent="base_link" xyz="-0.01 0 ${0.02 - base_height/2}" rpy="-0.014161 -0.0203861 0" /> -->
   <!-- <xacro:boris_arm parent="arm_support_link" xyz="0.1 0 ${arm_support_height/2}" rpy="0 0 0"/> -->
   <!-- <xacro:rgb_cam parent="wx200/gripper_bar_link" name="webcam" xyz="-0.078 0.0 0.05" rpy="0 0 0"/> -->
+  <xacro:imu parent="base_link" xyz="${base_len/2 + 0.0625} 0 ${0.02 - base_height/2}" rpy="0 0 0"/>
   <xacro:shark_base/>  <!-- isso aq n existe mais, a gente reverteu as mudanças do luis que transformavam aquilo tudo em um macro q n ta aparecendo mais -->
 </robot>
