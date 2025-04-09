@@ -80,7 +80,7 @@ def generate_launch_description():
         name="joint_state_publisher",
         output="both",
         parameters=[{
-            'source_list': ['/mobile_wx200/joint_states'],
+            'source_list': ['/boris_head/joint_states'],
         }],
     )
     rviz_node = Node(
