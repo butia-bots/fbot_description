@@ -59,12 +59,8 @@
     </joint>
   </xacro:macro>
 
-<<<<<<< HEAD:boris_description/urdf/boris_description.xacro
-  <xacro:sick_lms_1xx name="sick" ros_topic="/scan" />
-=======
 
   <xacro:sick_lms1xx robot_namespace="/lms1xx" />
->>>>>>> 46ae7d8 (Add caster wheel for gazebo simulation):boris_description/urdf/boris.xacro
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">
     <link name="dorso_link">
@@ -156,10 +152,14 @@
   </xacro:camera_turret>
   <xacro:orbbec_astra2 name="top_camera">
     <parent link="camera_turret_tilt_link"/>
-    <origin rpy="0 0 0" xyz="0.06705 0 -0.00425"/>
+    <origin rpy="0 0 -${M_PI/6}" xyz="0.06705 0 -0.00425"/>
   </xacro:orbbec_astra2>
+<<<<<<< HEAD:boris_description/urdf/boris_description.xacro
   <xacro:orbbec_astra2_gazebo name="top_camera" semantic_segmentation="false"/>
 >>>>>>> d617c95 (changes to xacros):boris_description/urdf/boris.xacro
+=======
+  <xacro:orbbec_astra2_gazebo name="top_camera"/>
+>>>>>>> f3a188e (Changes to make it possible to simulate Boris on Ignition.):boris_description/urdf/boris.xacro
 
   <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
   <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>
