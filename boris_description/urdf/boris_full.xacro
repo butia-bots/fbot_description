@@ -2,5 +2,6 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="boris">
     <xacro:property name="robot_model" default="wx200"/>
     <xacro:include filename="$(find boris_description)/urdf/boris_arm.xacro" />
+    <xacro:include filename="$(find boris_description)/urdf/boris_ros2_control.xacro" />
     <xacro:include filename="$(find interbotix_xsarm_descriptions)/urdf/wx200.urdf.xacro" />
 </robot>

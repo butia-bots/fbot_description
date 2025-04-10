@@ -124,9 +124,9 @@
   </xacro:camera_turret>
   <xacro:orbbec_astra2 name="top_camera">
     <parent link="camera_turret_tilt_link"/>
-    <origin rpy="0 0 0" xyz="0.06705 0 -0.00425"/>
+    <origin rpy="0 0 -${M_PI/6}" xyz="0.06705 0 -0.00425"/>
   </xacro:orbbec_astra2>
-  <xacro:orbbec_astra2_gazebo name="top_camera" semantic_segmentation="false"/>
+  <xacro:orbbec_astra2_gazebo name="top_camera"/>
 
   <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
   <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>

@@ -29,6 +29,8 @@
         <pose>0 0 0 0 0 0</pose>
         <visualize>true</visualize>
         <update_rate>40</update_rate>
+        <topic>/${name}/scan</topic>
+        <gz_frame_id>hokuyo_${name}_link</gz_frame_id>
         <ray>
           <scan>
             <horizontal>

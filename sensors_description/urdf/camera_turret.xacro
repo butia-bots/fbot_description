@@ -31,6 +31,7 @@
           <parent link="${parent}"/>
           <child link="${name}_pan_link"/>
           <axis xyz="0 0 1"/>
+          <dynamics damping="100.0" friction="100.0"/>
           <limit effort="1" lower="-1.57" upper="1.57" velocity="1"/>
       </joint>
       <link name="${name}_tilt_link">
@@ -60,6 +61,7 @@
           <parent link="${name}_pan_link"/>
           <child link="${name}_tilt_link"/>
           <axis xyz="0 1 0"/>
+          <dynamics damping="100.0" friction="100.0"/>
           <limit effort="1" lower="-1.57" upper="1.57" velocity="1"/>
         </joint>
         <ros2_control name="head_hardware_interface" type="system">
