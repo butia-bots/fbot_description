@@ -17,7 +17,9 @@
                 <param name="min">-6.28</param>
                 <param name="max">6.28</param>
             </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+            <param name="initial_value">-1.570</param>
+        </state_interface>
         </joint>
 
         <joint name="elbow">
