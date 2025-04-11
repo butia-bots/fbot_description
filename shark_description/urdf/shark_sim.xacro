@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- Simulation version of shark.xacro with mock hardware interface -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="shark_sim">
+
+  <!-- Include shark base description -->
+  <xacro:include filename="$(find shark_description)/urdf/shark_description.xacro" />
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find shark_description)/urdf/shark_materials.xacro" />
+
+  <!-- Import simulation version of ros2_control description -->
+  <xacro:include filename="$(find shark_description)/ros2_control/shark_sim_ros2_control.xacro" />
+
+  <!-- Gazebo plugins for differential drive -->
+  <xacro:include filename="$(find shark_description)/urdf/shark_v1_gazebo_plugins.xacro" />
+  
+  <!-- Import any additional elements needed from boris_description -->
+  <xacro:include filename="$(find boris_description)/urdf/boris.xacro" />
+  
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <robotNamespace>/</robotNamespace>
+      <parameters>$(find fbot_simulation)/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>

@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="shark-v1">
 
+  <!-- Include xacro utilities for functions like optenv -->
+  
+  <!-- Define environment variable properties before including files that use them -->
+  <xacro:property name="ign_gazebo_resource_path" value="$(optenv IGN_GAZEBO_RESOURCE_PATH)" />
+  <xacro:property name="ign_gazebo_resource_path_set" value="${ign_gazebo_resource_path != ''}" />
+
   <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/hokuyo.xacro" />
-  <xacro:include filename="/home/stihl/fbot_ws/src/sick_scan_xd/urdf/sick_lms1xx.urdf.xacro" />
+  <!-- <xacro:include filename="/home/stihl/fbot_ws/src/sick_scan_xd/urdf/sick_lms1xx.urdf.xacro" /> -->
   <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
   <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.xacro" />
   <!-- <xacro:include filename="$(find boris_head_description)/urdf/boris_head.urdf" /> -->
@@ -57,7 +63,7 @@
   </xacro:macro>
 
 
-  <xacro:sick_lms_1xx name="sick" ros_topic="/scan" />
+  <!-- <xacro:sick_lms_1xx name="sick" ros_topic="/scan" /> -->
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">
     <link name="dorso_link">
@@ -106,6 +112,27 @@
     </joint>
   </xacro:macro>
 
+  <material name="gray">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+
+  <link name="sick_mount_link">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 0.1" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+  </link>
   
   <joint name="laser_joint" type="fixed">
     <origin xyz="${base_len/2 + 0.017 + 0.05} 0 ${0.02 + base_height/2}" rpy="0 0 0" />
@@ -125,14 +152,27 @@
     <child link="wx200/base_link"/>
   </joint> -->
 
-  <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/>
+  <xacro:shark_base/>  
 
   <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
   <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>
   <xacro:sensor_hokuyo parent="base_link" xyz="${base_len/2 + 0.017 + 0.024} 0 ${0.02 - base_height/2}" rpy="3.14 0 0" name="ground"/>
   <xacro:sensor_hokuyo parent="base_link" xyz="${-base_len/2 - 0.017 - 0.024} 0 ${0.02 - base_height/2}" rpy="3.14 0 3.14" name="back"/>
   <xacro:imu parent="base_link" xyz="-0.01 0 ${0.02 - base_height/2}" rpy="-0.014161 -0.0203861 0" />
-  <!-- <xacro:boris_arm parent="arm_support_link" xyz="0.1 0 ${arm_support_height/2}" rpy="0 0 0"/> -->
-  <!-- <xacro:rgb_cam parent="wx200/gripper_bar_link" name="webcam" xyz="-0.078 0.0 0.05" rpy="0 0 0"/> -->
-  <xacro:shark_base/>  <!-- isso aq n existe mais, a gente reverteu as mudanças do luis que transformavam aquilo tudo em um macro q n ta aparecendo mais -->
+  <xacro:realsense_camera name="camera" parent="dorso_link" xyz="${dorso_len/2 + 0.05} 0 ${dorso_height + 0.053}" rpy="0 0 0"/>
+
+  <!-- Comment out this joint until the WX200 arm is properly included -->
+  <!-- 
+  <joint name="arm_support_base" type="fixed">
+    <parent link="arm_support_link"/>
+    <child link="wx200/base_link"/>
+    <origin rpy="0 0 0" xyz="0.1 0 0.0235"/>
+  </joint>
+  -->
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>/home/guilherme/fbot_ws/src/fbot_simulation/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
 </robot>

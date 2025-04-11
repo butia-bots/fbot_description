@@ -5,13 +5,27 @@
   
   <xacro:macro name="realsense_camera" params="name parent xyz rpy">
 
-      <!-- @TODO: GABIARRA PRA GIRAR A CAMERA -->
       <link name="head_pan_link_static">
           <inertial>
               <origin rpy="0 0 0" xyz="-1.35308431126191E-16 -2.97071395261028E-17 0.0220876265081744"/>
               <mass value="0.0182769203076134"/>
               <inertia ixx="1.32243845065555E-05" ixy="5.07660179129181E-13" ixz="1.067515220067E-20" iyy="7.13386116649085E-06" iyz="-1.32882457845217E-20" izz="7.83291781352837E-06"/>
           </inertial>
+          <visual>
+              <origin rpy="0 0 0" xyz="0 0 0"/>
+              <geometry>
+                  <mesh filename="package://sensors_description/meshes/tilt_link.STL"/>
+              </geometry>
+              <material name="">
+                  <color rgba="0.250980392156863 0.250980392156863 0.250980392156863 1"/>
+              </material>
+          </visual>
+          <collision>
+              <origin rpy="0 0 0" xyz="0 0 0"/>
+              <geometry>
+                  <mesh filename="package://sensors_description/meshes/tilt_link.STL"/>
+              </geometry>
+          </collision>
       </link>
       <link name="head_pan_link">
           <inertial>

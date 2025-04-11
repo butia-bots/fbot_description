@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot>
+  <ros2_control name="shark_sim" type="system">
+    <hardware>
+      <!-- Use mock_components for simulation instead of real hardware driver -->
+      <plugin>mock_components/GenericSystem</plugin>
+    </hardware>
+    <joint name="left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+</robot>

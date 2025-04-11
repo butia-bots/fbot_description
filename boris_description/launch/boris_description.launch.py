@@ -24,16 +24,27 @@ def generate_launch_description():
         )
     )
 
+    # Add a simulation mode parameter
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "simulation",
+            default_value="true",
+            description="Use simulation mode with mock components if true",
+        )
+    )
+    
     # Initialize Arguments
     use_rviz = LaunchConfiguration("use_rviz")
+    simulation = LaunchConfiguration("simulation")
 
-    # Get URDF via xacro
+    # Get URDF via xacro - choose between real hardware or simulation
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("boris_description"), "urdf", "boris_description.xacro"]
+                [FindPackageShare("boris_description"), "urdf", 
+                 "boris_sim.xacro" if simulation else "boris_description.xacro"]
             ),
         ]
     )
@@ -62,6 +73,10 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[robot_description, robot_controllers],
         output="both",
+        remappings=[
+            ("/hoverboard_base_controller/cmd_vel_unstamped", "/cmd_vel"),
+            ("/hoverboard_base_controller/odom", "/odom"),
+        ],
     )
 
     robot_state_pub_node = Node(
@@ -69,9 +84,7 @@ def generate_launch_description():
         executable="robot_state_publisher",
         output="both",
         parameters=[robot_description],
-        remappings=[
-            ("/hoverboard_base_controller/cmd_vel_unstamped", "/cmd_vel"),
-        ],
+
     )
     joint_state_publisher_node = Node(
         package="joint_state_publisher",

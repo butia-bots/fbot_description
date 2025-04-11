@@ -13,6 +13,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
+          <!-- Always use package:// format which is more reliable -->
           <mesh filename="package://sensors_description/meshes/hokuyo.dae"/>
         </geometry>
       </visual>
@@ -34,7 +35,7 @@
   <!-- ULM-30LX Hokuyo Laser Range Finder -->
   <xacro:macro name="sim_laser_range_finder">
     <gazebo reference="hokuyo_${name}_link">
-      <sensor type="ray" name="head_hokuyo_sensor">
+      <sensor type="ray" name="${name}_hokuyo_sensor">
         <pose>0 0 0 0 0 0</pose>
         <visualize>false</visualize>
         <update_rate>40</update_rate>
