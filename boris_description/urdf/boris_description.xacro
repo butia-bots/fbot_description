@@ -56,7 +56,6 @@
     </joint>
   </xacro:macro>
 
-
   <xacro:sick_lms_1xx name="sick" ros_topic="/scan" />
 
   <xacro:macro name="dorso" params="parent depth width height xyz rpy">

@@ -13,17 +13,17 @@
   <xacro:macro name="sick_lms_1" params="name ros_topic length width height mass x_offset z_offset min_range max_range gaussian_noise">
     <link name="${name}_mount_link">
       <visual>
-        <!-- <geometry>
-          <mesh filename="/home/stihl/fbot_ws/src/sick_scan_xd/meshes/LMS1xx_small.dae" />
-        </geometry> -->
+        <geometry>
+          <mesh filename="package://sensors_description/meshes/LMS1xx_collision.stl"/>
+        </geometry>
         <material name="blue" >
           <color rgba="0 0 1 1" />
         </material>
       </visual>
       <collision>
-        <!-- <geometry>
-          <mesh filename="/home/stihl/fbot_ws/src/sick_scan_xd/meshes/LMS1xx_collision.stl" />
-        </geometry> -->
+        <geometry>
+          <mesh filename="package://sensors_description/meshes/LMS1xx_small.dae"/>
+        </geometry>
       </collision>
       <inertial>
         <mass value="${mass}" />
@@ -50,7 +50,6 @@
     </link>
     <xacro:sick_lms_1_laser_gazebo_v0 name="${name}" link="${name}_laser" ros_topic="${ros_topic}" update_rate="15.0" min_angle="-2.357" max_angle="2.357" min_range="${min_range}" max_range="${max_range}" gaussian_noise="${gaussian_noise}" />
   </xacro:macro>
-
 
   <xacro:macro name="sick_lms_1_laser_gazebo_v0" params="name link ros_topic update_rate min_angle max_angle min_range max_range gaussian_noise">
     <gazebo reference="${link}">
