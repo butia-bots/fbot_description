@@ -10,8 +10,6 @@ from launch_ros.actions import Node
 def generate_launch_description():
     urg_node_dir = get_package_share_directory('sensors_description')
 
-    
-
     return LaunchDescription([
         # Argumento para escolher a interface do sensor (serial ou ethernet)
         DeclareLaunchArgument(
