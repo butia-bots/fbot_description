@@ -14,15 +14,15 @@
     <link name="${name}_mount_link">
       <visual>
         <geometry>
-          <mesh filename="package://sensors_description/meshes/LMS1xx_collision.stl"/>
+          <mesh filename="package://sensors_description/meshes/sick-lms1xx.stl"/>
         </geometry>
-        <material name="blue" >
+        <material name="grey" >
           <color rgba="0 0 1 1" />
         </material>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://sensors_description/meshes/LMS1xx_small.dae"/>
+          <mesh filename="package://sensors_description/meshes/sick-lms1xx.dae"/>
         </geometry>
       </collision>
       <inertial>
