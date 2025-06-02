@@ -1,54 +1,38 @@
-/**/controller_manager:
+# This config file is used by ros2_control
+controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
+
+    interbotix_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    interbotix_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    arm_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-    
-    gripper_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
-/**/arm_controller:
+interbotix_arm_controller:
   ros__parameters:
-      joints:
-        - waist
-        - shoulder
-        - elbow
-        - wrist_angle
-        - wrist_rotate
-      interface_name: position
-      command_interfaces:
-        - position
-      state_interfaces:
-        - position
-      state_publish_rate: 50.0
-      action_monitor_rate: 20.0
-      constraints:
-        stopped_velocity_tolerance: 0.02
-        goal_time: 1.0
-
-/**/gripper_controller:
+    joints:
+      - waist
+      - shoulder
+      - elbow
+      - wrist_angle
+      - wrist_rotate
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+interbotix_gripper_controller:
   ros__parameters:
-      joints:
-        - left_finger
-        - right_finger
-      interface_name: position
-      command_interfaces:
-        - position
-      state_interfaces:
-        - position
-
-/**/joint_state_broadcaster:
-  ros__parameters:
-      joints:
-        - waist
-        - shoulder
-        - elbow
-        - wrist_angle
-        - wrist_rotate
-        - gripper
-        - left_finger
-        - right_finger
+    joints:
+      - left_finger
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
