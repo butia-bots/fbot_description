@@ -10,6 +10,7 @@
                 <param name="max">6.28</param>
             </command_interface>
             <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="shoulder">
@@ -17,9 +18,9 @@
                 <param name="min">-6.28</param>
                 <param name="max">6.28</param>
             </command_interface>
-        <state_interface name="position">
-            <param name="initial_value">-1.570</param>
-        </state_interface>
+            <state_interface name="position">
+            </state_interface>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="elbow">
@@ -27,7 +28,8 @@
                 <param name="min">-6.28</param>
                 <param name="max">6.28</param>
             </command_interface>
-        <state_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="wrist_angle">
@@ -35,7 +37,8 @@
                 <param name="min">-6.28</param>
                 <param name="max">6.28</param>
             </command_interface>
-        <state_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="wrist_rotate">
@@ -44,22 +47,174 @@
                 <param name="max">6.28</param>
             </command_interface>
             <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="left_finger">
             <command_interface name="position">
                 <param name="min">-0.1</param>
-                <param name="max">0.0</param>
+                <param name="max">0.1</param>
             </command_interface>
             <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="right_finger">
                 <command_interface name="position">
-                <param name="min">0.0</param>
+                <param name="min">-0.1</param>
                 <param name="max">0.1</param>
                 </command_interface>
                 <state_interface name="position"/>
+                <state_interface name="velocity"/>
+        </joint>
+
+        <joint name="caster_wheel_joint">
+            <state_interface name="velocity"/>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="gripper">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="camera_turret_pan_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="camera_turret_tilt_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="horizontal_neck_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="vertical_neck_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="jaw_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="left_eye_horizontal_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="left_eye_vertical_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="left_inferior_eyelid_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="left_superior_eyelid_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="left_vertical_eyebrow_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="left_rotacional_eyebrow_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="right_eye_horizontal_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="right_eye_vertical_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="right_inferior_eyelid_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="right_superior_eyelid_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="right_vertical_eyebrow_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="right_rotacional_eyebrow_joint">
+            <command_interface name="position">
+                <param name="min">-6.28</param>
+                <param name="max">6.28</param>
+            </command_interface>
+            <state_interface name="position"/>
         </joint>
     </ros2_control>
     <gazebo>

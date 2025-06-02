@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="boris">
+
+  <xacro:property name="robot_model" default="wx200"/>
+  <xacro:include filename="$(find boris_description)/urdf/boris_ros2_control.xacro" />
+
+  <xacro:include filename="$(find sensors_description)/urdf/hokuyo.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdf/sick_lms1xx.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdf/rgb_cam.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdf/camera_turret.xacro" />
+  <xacro:include filename="$(find hector_models)/urdf/orbbec_astra2.xacro" />
+  <xacro:include filename="$(find hector_models)/gazebo/orbbec_astra2.gazebo.xacro" />
+  <xacro:include filename="$(find shark_description)/urdf/shark.xacro" />
+  <xacro:include filename="$(find sensors_description)/urdf/realsense_camera.urdf.xacro" />
+
+  <xacro:property name="base_width" value="0.336" />
+  <xacro:property name="base_len" value="0.5" />
+  <xacro:property name="base_height" value="0.231" />
+  <xacro:property name="wheel_radius" value="0.0825" />
+  <xacro:property name="base_wheel_gap" value="0.05" />
+  <xacro:property name="wheel_width" value="0.06" />
+  <xacro:property name="wheel_separation" value="0.39" />
+  <xacro:property name="wheel_joint_offset" value="0.0" />
+  <xacro:property name="caster_height" value="0.07" />
+  
+  <xacro:property name="dorso_width" value="0.338" />
+  <xacro:property name="dorso_len" value="0.282" />
+  <xacro:property name="dorso_height" value="0.765" />
+  
+  <xacro:property name="arm_support_width" value="0.336" />
+  <xacro:property name="arm_support_len" value="0.325" />
+  <xacro:property name="arm_support_height" value="0.047" />
+  <xacro:arg name="arm_z_position" default="0.34"/>
+  <xacro:property name="arm_z_position" value="$(arg arm_z_position)" />
+
+  <xacro:arg name="robot_name" default="${robot_model}"/>
+
+  <xacro:macro name="box_inertia" params="m w h d">
+    <inertial>
+      <mass value="${m}" />
+      <inertia ixx="${m / 12.0 * (d*d + h*h)}" ixy="0.0" ixz="0.0" iyy="${m / 12.0 * (w*w + h*h)}"
+        iyz="0.0" izz="${m / 12.0 * (w*w + d*d)}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="sphere_inertia" params="m r">
+    <inertial>
+      <mass value="${m}" />
+      <inertia ixx="${2.0*m*(r*r)/5.0}" ixy="0.0" ixz="0.0" iyy="${2.0*m*(r*r)/5.0}" iyz="0.0"
+        izz="${2.0*m*(r*r)/5.0}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="imu" params="parent xyz rpy">
+    <link name="imu_link" />
+    <joint name="imu_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="imu_link" />
+      <origin xyz="${xyz}" rpy="${rpy}" />
+    </joint>
+  </xacro:macro>
+
+
+  <xacro:macro name="dorso" params="parent depth width height xyz rpy">
+    <link name="dorso_link">
+      <xacro:box_inertia m="1" w="${width}" h="${height}" d="0.01" />
+      <visual>
+        <origin xyz="0.0 0.0 ${height/2}"/>
+        <material name="lightgray" />
+        <geometry>
+          <box size="${depth} ${width} ${height}" />
+          </geometry>
+          </visual>
+          <collision>
+            <origin xyz="0.0 0.0 ${height/2}"/>
+            <geometry>
+              <box size="${depth} ${width} ${height}" />
+              </geometry>
+      </collision>
+    </link>
+    <joint name="dorso_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="dorso_link"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="arm_support" params="parent width height depth xyz rpy">
+    <link name="arm_support_link">
+      <xacro:box_inertia m="1" w="${width}" h="${height}" d="0.01" />
+      <visual>
+        <material name="lightgray" />
+        <geometry>
+          <box size="${depth} ${width} ${height}" />
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${depth} ${width} ${height}" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="arm_support_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="arm_support_link"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:dorso parent="base_link" depth="${dorso_len}" width="${dorso_width}" height="${dorso_height}" xyz="${-base_len/2 + (dorso_len/2)} 0 ${base_height/2}" rpy="0 0 0"/>
+  <xacro:arm_support parent="dorso_link" width="${arm_support_width}" height="${arm_support_height}" depth="${arm_support_len}" xyz="${dorso_len/2 + arm_support_len/2} 0 ${arm_z_position}" rpy="0 0 0"/>
+  <xacro:imu parent="base_link" xyz="-0.01 0 ${0.02 - base_height/2}" rpy="-0.014161 -0.0203861 0" />
+
+  <gazebo reference="dorso_link">
+    <material>Gazebo/DarkGray</material>
+  </gazebo>
+
+  <gazebo reference="arm_support_link">
+    <material>Gazebo/DarkGray</material>
+  </gazebo>
+</robot>
