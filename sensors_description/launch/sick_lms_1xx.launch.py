@@ -36,6 +36,11 @@ def generate_launch_description():
             arguments=node_arguments
         )
     
+    launch_args=DeclareLaunchArgument(
+            'use_rviz',
+            default_value='false'
+        )
+
     rviz_node = Node(
             package='rviz2',
             executable='rviz2',
@@ -44,12 +49,6 @@ def generate_launch_description():
             condition=IfCondition(LaunchConfiguration('use_rviz')),
             arguments=['-d', os.path.join(sick_scan_pkg_prefix, 'rviz', 'sick_lms_1xx.rviz')]
         )
-
-    launch_args=DeclareLaunchArgument(
-            'use_rviz',
-            default_value='False'
-        )
-
 
     return LaunchDescription(
         [
