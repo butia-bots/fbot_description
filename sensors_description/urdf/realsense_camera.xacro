@@ -84,7 +84,7 @@
 		</gazebo>
 	</xacro:macro>
   
-  <xacro:macro name="realsense_camera" params="name parent xyz rpy">
+  <xacro:macro name="realsense_camera" params="name parent *origin">
 
       <link name="head_pan_link_static">
           <inertial>
